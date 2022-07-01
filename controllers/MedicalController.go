@@ -2,19 +2,31 @@ package controllers
 
 import (
 	"lifesafe/services"
-	"log"
 	"net/http"
-
-	"github.com/gorilla/mux"
 )
 
-func CreateMedicalController(router *mux.Router) {
-	router.HandleFunc("/", services.AddingMedicalConsultance)
+// Creando una peticion medical
+func CreateMedical(w http.ResponseWriter, r *http.Request) {
+	services.CreateMedical(w, r)
 }
 
-func MedicalController() {
-	router := mux.NewRouter().StrictSlash(true)
-	CreateMedicalController(router)
+// Obteniendo por ID
 
-	log.Fatal(http.ListenAndServe(":8080", router))
+func GetConsultationById(w http.ResponseWriter, r *http.Request) {
+	services.GetConsultationById(w, r)
+}
+
+// Obteniendo todas las consultas
+func GetAllConsultation(w http.ResponseWriter, r *http.Request) {
+	services.GetAllConsultation(w, r)
+}
+
+// Actualizando una consulta
+func UpdateConsultation(w http.ResponseWriter, r *http.Request) {
+	services.UpdateConsultation(w, r)
+}
+
+// Borrando una consulta
+func DeletingConsultation(w http.ResponseWriter, r *http.Request) {
+	services.DeletingConsultation(w, r)
 }
