@@ -1,0 +1,4 @@
+{
+    "connection_string": "root:root@tcp(localhost:3306)/lifesafe",
+    "port": 8080
+}

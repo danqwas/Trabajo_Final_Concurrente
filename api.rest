@@ -1,0 +1,5 @@
+@host = localhost:8080
+
+// Create a Consultation
+POST http://{{host}}/api/consultation HTTP/1.1
+content-type: application/json
