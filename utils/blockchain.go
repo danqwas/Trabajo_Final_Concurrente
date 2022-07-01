@@ -138,15 +138,6 @@ func BCIPServer(end chan<- int, updatedBlocks chan<- int) {
 
 /******************BLOCKCHAIN**********************/
 
-type MedicalRecord struct {
-	Name       string
-	Year       string
-	Hospital   string
-	Pharmacist string
-	Medication string
-	Quantity   string
-}
-
 type Block struct {
 	Index        int
 	Timestamp    time.Time
@@ -271,12 +262,15 @@ func Initialize() {
 		requestMessage, _ = json.Marshal(requestBody)
 		SendMessage(dest, string(requestMessage))
 	}
+	fmt.Println("Welcome to MedicalRecordApp! 😇")
 }
 
 func AddingBlock(newBlock Block) {
 	localBlockChain.AddBlock(newBlock)
 	BroadcastBlock(newBlock)
 	fmt.Println("You have registered succesfully!")
+	time.Sleep(2 * time.Second)
+	PrintMedicalRecords()
 }
 
 func GetAllConsultations() {

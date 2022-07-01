@@ -17,8 +17,16 @@ func CreateMedical(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-type", "application/json")
 	var consultation entities.Consultation
 	json.NewDecoder(r.Body).Decode(&consultation)
+	consultation_chain := entities.Consultation{}
+	consultation_chain.ID = consultation.ID
+	consultation_chain.Name = consultation.Name
+	consultation_chain.Medication = consultation.Medication
+	consultation_chain.Hospital = consultation.Hospital
+	consultation_chain.Pharmacist = consultation.Pharmacist
+	consultation_chain.Quantity = consultation.Quantity
+	consultation_chain.Year = consultation.Year
 	newBlock := utils.Block{
-		Data: consultation,
+		Data: consultation_chain,
 	}
 	utils.AddingBlock(newBlock)
 	database.Instance.Create(&consultation)

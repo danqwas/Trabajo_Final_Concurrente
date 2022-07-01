@@ -1,9 +1,10 @@
-@host = localhost:8080
-// Create Product
+@host = localhost:4000
+// Create Consultation
 POST http://{{host}}/api/consultations HTTP/1.1
 content-type: application/json
+
 {
-    "Name": "Test",
+    "Name": "Test5",
     "Year": "2001",
     "Hospital": "Test",
     "Pharmacist": "test",
@@ -11,15 +12,19 @@ content-type: application/json
     "Quantity": "10"
 }
 ###
-// Get Product By ID
+// Get Consultation By ID
 GET http://{{host}}/api/consultations/1 HTTP/1.1
 content-type: application/json
 ###
-// Get All Products
+// Get All Consultations
 GET http://{{host}}/api/consultations/ HTTP/1.1
 content-type: application/json
 ###
-// Update Product
+// Get Status
+GET http://{{host}}/api/status/ HTTP/1.1
+content-type: application/json
+###
+// Update Consultation
 PUT http://{{host}}/api/consultations/1 HTTP/1.1
 content-type: application/json
 {
