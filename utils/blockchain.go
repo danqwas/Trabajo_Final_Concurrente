@@ -5,8 +5,8 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"lifesafe/domain/entities"
 	"net"
-	"os"
 	"strings"
 	"time"
 )
@@ -150,7 +150,7 @@ type MedicalRecord struct {
 type Block struct {
 	Index        int
 	Timestamp    time.Time
-	Data         MedicalRecord
+	Data         entities.Consultation
 	PreviousHash string
 	Hash         string
 }
@@ -168,7 +168,7 @@ func (blockChain *BlockChain) CreateGenesisBlock() Block {
 	block := Block{
 		Index:        0,
 		Timestamp:    time.Now(),
-		Data:         MedicalRecord{},
+		Data:         entities.Consultation{},
 		PreviousHash: "0",
 	}
 	block.Hash = block.CalculateHash()
@@ -248,7 +248,37 @@ func PrintHosts() {
 	}
 }
 
-func main() {
+func Initialize() {
+	var dest string
+	end := make(chan int)
+	updatedBlocks := make(chan int)
+	fmt.Print("Enter your host: ")
+	fmt.Scanf("%s\n", &LOCALHOST)
+	fmt.Print("Enter destination host(Empty to be the first node): ")
+	fmt.Scan("%s\n", &dest)
+	go BCIPServer(end, updatedBlocks)
+	localBlockChain = CreateBlockChain()
+	if dest != "" {
+		requestBody := RequestBody{
+			Message:     LOCALHOST,
+			MessageType: NEWHOST,
+		}
+		requestMessage, _ := json.Marshal(requestBody)
+		SendMessage(dest, string(requestMessage))
+		requestBody.MessageType = NEWBLOCK
+		requestMessage, _ = json.Marshal(requestBody)
+		SendMessage(dest, string(requestMessage))
+	}
+}
+
+func AddingBlock(newBlock Block) {
+	localBlockChain.AddBlock(newBlock)
+	BroadcastBlock(newBlock)
+	fmt.Println("You have registered succesfully!")
+
+}
+
+/* func main() {
 	var dest string
 	end := make(chan int)
 	updatedBlocks := make(chan int)
@@ -307,4 +337,4 @@ func main() {
 		}
 	}
 	<-end
-}
+} */

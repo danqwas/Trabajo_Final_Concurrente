@@ -5,6 +5,7 @@ import (
 	"lifesafe/database"
 	"lifesafe/domain/entities"
 	"lifesafe/helper"
+	"lifesafe/utils"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -12,9 +13,14 @@ import (
 
 // Crea una consulta
 func CreateMedical(w http.ResponseWriter, r *http.Request) {
+
 	w.Header().Set("Content-type", "application/json")
 	var consultation entities.Consultation
 	json.NewDecoder(r.Body).Decode(&consultation)
+	newBlock := utils.Block{
+		Data: consultation,
+	}
+	utils.AddingBlock(newBlock)
 	database.Instance.Create(&consultation)
 	json.NewEncoder(w).Encode(consultation)
 }

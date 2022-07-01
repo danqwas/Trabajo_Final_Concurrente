@@ -4,11 +4,14 @@ import (
 	"fmt"
 	"lifesafe/controllers"
 	"lifesafe/database"
+	"lifesafe/utils"
 	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
 )
+
+// Variables Globales
 
 func RegisterRoutes(router *mux.Router) {
 	router.HandleFunc("/api/consultations/{id}", controllers.GetConsultationById).Methods("GET")
@@ -30,9 +33,11 @@ func main() {
 	router := mux.NewRouter().StrictSlash(true)
 
 	// Registrar las rutas
-	RegisterRoutes(router)
 
-	// Iniciar el server
+	utils.Initialize()
+	RegisterRoutes(router)
 	log.Println(fmt.Sprintf("Starting Server on port %s", AppConfig.Port))
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%v", AppConfig.Port), router))
+	fmt.Println("Welcome to MedicalRecordApp! 😇")
+	// Iniciar el server
 }
