@@ -30,3 +30,7 @@ func UpdateConsultation(w http.ResponseWriter, r *http.Request) {
 func DeletingConsultation(w http.ResponseWriter, r *http.Request) {
 	services.DeletingConsultation(w, r)
 }
+
+func GetStatus(w http.ResponseWriter, r *http.Request) {
+	services.GetStatus(w, r)
+}

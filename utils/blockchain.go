@@ -248,6 +248,8 @@ func PrintHosts() {
 	}
 }
 
+// ******** SERVICES TO BLOCKCHAIN ********
+
 func Initialize() {
 	var dest string
 	end := make(chan int)
@@ -255,7 +257,7 @@ func Initialize() {
 	fmt.Print("Enter your host: ")
 	fmt.Scanf("%s\n", &LOCALHOST)
 	fmt.Print("Enter destination host(Empty to be the first node): ")
-	fmt.Scan("%s\n", &dest)
+	fmt.Scanf("%s\n", &dest)
 	go BCIPServer(end, updatedBlocks)
 	localBlockChain = CreateBlockChain()
 	if dest != "" {
@@ -275,7 +277,14 @@ func AddingBlock(newBlock Block) {
 	localBlockChain.AddBlock(newBlock)
 	BroadcastBlock(newBlock)
 	fmt.Println("You have registered succesfully!")
+}
 
+func GetAllConsultations() {
+	PrintMedicalRecords()
+}
+
+func GetAllHosts() {
+	PrintHosts()
 }
 
 /* func main() {

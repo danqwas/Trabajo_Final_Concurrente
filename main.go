@@ -15,6 +15,7 @@ import (
 
 func RegisterRoutes(router *mux.Router) {
 	router.HandleFunc("/api/consultations/{id}", controllers.GetConsultationById).Methods("GET")
+	router.HandleFunc("/api/status", controllers.GetStatus).Methods("GET")
 	router.HandleFunc("/api/consultations", controllers.CreateMedical).Methods("POST")
 	router.HandleFunc("/api/consultations", controllers.GetAllConsultation).Methods("GET")
 	router.HandleFunc("/api/consultations/{id}", controllers.UpdateConsultation).Methods("PUT")

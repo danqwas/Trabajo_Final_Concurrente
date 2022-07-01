@@ -42,6 +42,7 @@ func GetConsultationById(w http.ResponseWriter, r *http.Request) {
 func GetAllConsultation(w http.ResponseWriter, r *http.Request) {
 	var consultation []entities.Consultation
 	database.Instance.Find(&consultation)
+	utils.PrintMedicalRecords()
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(consultation)
@@ -72,4 +73,10 @@ func DeletingConsultation(w http.ResponseWriter, r *http.Request) {
 	var consultation entities.Consultation
 	database.Instance.Delete(&consultation, consultationId)
 	json.NewEncoder(w).Encode("consultation Deleted Successfully!")
+}
+
+func GetStatus(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	utils.PrintHosts()
+	json.NewEncoder(w).Encode(utils.PrintHosts)
 }
