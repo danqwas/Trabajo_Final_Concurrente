@@ -142,10 +142,9 @@ type MedicalRecord struct {
 	Name       string
 	Year       string
 	Hospital   string
-	Doctor     string
-	Diagnostic string
+	Pharmacist string
 	Medication string
-	Procedure  string
+	Quantity   string
 }
 
 type Block struct {
@@ -182,11 +181,21 @@ func (blockChain *BlockChain) GetLatesBlock() Block {
 }
 
 func (blockChain *BlockChain) AddBlock(block Block) {
+	// pasar por todos los bloques y verificar que el hash anterior sea igual al hash actual
+	if block.PreviousHash != blockChain.GetLatesBlock().Hash {
+		return
+	}
 	block.Timestamp = time.Now()
 	block.Index = blockChain.GetLatesBlock().Index + 1
 	block.PreviousHash = blockChain.GetLatesBlock().Hash
 	block.Hash = block.CalculateHash()
 	blockChain.Chain = append(blockChain.Chain, block)
+
+	/*	block.Timestamp = time.Now()
+		block.Index = blockChain.GetLatesBlock().Index + 1
+		block.PreviousHash = blockChain.GetLatesBlock().Hash
+		block.Hash = block.CalculateHash()
+		blockChain.Chain = append(blockChain.Chain, block)*/
 }
 
 func (blockChain *BlockChain) IsChainValid() bool {
@@ -220,13 +229,13 @@ func PrintMedicalRecords() {
 	for index, block := range blocks {
 		medicalRecord := block.Data
 		fmt.Printf("- - - Medical Record No. %d - - - \n", index+1)
-		fmt.Printf("\tName: %s\n", medicalRecord.Name)
-		fmt.Printf("\tYear: %s\n", medicalRecord.Year)
-		fmt.Printf("\tHospital: %s\n", medicalRecord.Hospital)
-		fmt.Printf("\tDoctor: %s\n", medicalRecord.Doctor)
-		fmt.Printf("\tDiagnostic: %s\n", medicalRecord.Diagnostic)
-		fmt.Printf("\tMedication: %s\n", medicalRecord.Medication)
-		fmt.Printf("\tProcedure: %s\n", medicalRecord.Procedure)
+		fmt.Printf("Name: %s\n", medicalRecord.Name)
+		fmt.Printf("Year: %s\n", medicalRecord.Year)
+		fmt.Printf("Hospital: %s\n", medicalRecord.Hospital)
+		fmt.Printf("Pharmacist: %s\n", medicalRecord.Pharmacist)
+		fmt.Printf("Medication: %s\n", medicalRecord.Medication)
+		fmt.Printf("Quantity: %s\n", medicalRecord.Quantity)
+
 	}
 }
 
@@ -277,14 +286,12 @@ func main() {
 			medicalRecord.Year, _ = in.ReadString('\n')
 			fmt.Print("Enter hospital: ")
 			medicalRecord.Hospital, _ = in.ReadString('\n')
-			fmt.Print("Enter doctor: ")
-			medicalRecord.Doctor, _ = in.ReadString('\n')
-			fmt.Print("Enter diagnostic: ")
-			medicalRecord.Diagnostic, _ = in.ReadString('\n')
+			fmt.Print("Enter pharmacist: ")
+			medicalRecord.Pharmacist, _ = in.ReadString('\n')
 			fmt.Print("Enter medication: ")
 			medicalRecord.Medication, _ = in.ReadString('\n')
-			fmt.Print("Enter procedure: ")
-			medicalRecord.Procedure, _ = in.ReadString('\n')
+			fmt.Print("Enter quantity: ")
+			medicalRecord.Quantity, _ = in.ReadString('\n')
 			newBlock := Block{
 				Data: medicalRecord,
 			}

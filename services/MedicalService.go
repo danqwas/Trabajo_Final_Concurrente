@@ -6,6 +6,6 @@ import (
 )
 
 func AddingMedicalConsultance(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Adding Medical Consultance")
-	fmt.Fprintf(w, "Adding Medical Consultance")
+	// this is the code that will be executed when the user clicks the button
+	fmt.Fprintf(w, "Hello World!")
 }
